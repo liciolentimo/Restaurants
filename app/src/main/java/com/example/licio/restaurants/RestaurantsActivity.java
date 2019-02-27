@@ -10,6 +10,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RestaurantsActivity extends AppCompatActivity {
     @BindView(R.id.locationTextView) TextView mLocationTextView;
     @BindView(R.id.listView) ListView mListView;
@@ -18,6 +21,7 @@ public class RestaurantsActivity extends AppCompatActivity {
             "Slappy Cakes", "Equinox", "Miss Delta's", "Andina",
             "Lardo", "Portland City Grill", "Fat Head's Brewery",
             "Chipotle", "Subway"};
+    private String[] cuisines = new String[] {"Vegan Food", "Breakfast", "Fishs Dishs", "Scandinavian", "Coffee", "English Food", "Burgers", "Fast Food", "Noodle Soups", "Mexican", "BBQ", "Cuban", "Bar Food", "Sports Bar", "Breakfast", "Mexican" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +33,18 @@ public class RestaurantsActivity extends AppCompatActivity {
 //        mLocationTextView = (TextView)findViewById(R.id.locationTextView);
 //        mListView = (ListView) findViewById(R.id.listView);
 
-        ArrayAdapter adapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,restaurants);
-        mListView.setAdapter(adapter);
+        MyRestaurantsArrayAdapter adapter = new MyRestaurantsArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,restaurants,cuisines);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String restaurant = ((TextView)view).getText().toString();
-                Toast.makeText(RestaurantsActivity.this, restaurant, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        ArrayAdapter adapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,restaurants);
+       mListView.setAdapter(adapter);
+
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                String restaurant = ((TextView)view).getText().toString();
+//                Toast.makeText(RestaurantsActivity.this, restaurant, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");

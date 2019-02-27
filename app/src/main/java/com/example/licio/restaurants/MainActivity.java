@@ -11,7 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.findRestaurantsButton) Button mFindRestaurantsButton;
     @BindView(R.id.locationEditText) EditText mLocationEditText;
@@ -26,20 +29,27 @@ public class MainActivity extends AppCompatActivity {
 //        mFindRestaurantsButton = (Button)findViewById(R.id.findRestaurantsButton);
 //        mLocationEditText = (EditText)findViewById(R.id.locationEditText);
 //        mAppNameTextView = (TextView) findViewById(R.id.appNameTextView);
-        Typeface caviarFont = Typeface.createFromAsset(getAssets(),"fonts/CaviarDreams.ttf");
+        Typeface caviarFont = Typeface.createFromAsset(getAssets(), "fonts/CaviarDreams.ttf");
         mAppNameTextView.setTypeface(caviarFont);
-        mFindRestaurantsButton.setOnClickListener(new View.OnClickListener() {
+        mFindRestaurantsButton.setOnClickListener(this);
+        //  mFindRestaurantsButton.setOnClickListener(new View.OnClickListener() {
+    }
             @Override
             public void onClick(View v) {
+            String location = mLocationEditText.getText().toString();
+            Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
+            intent.putExtra("location", location);
+            startActivity(intent);
 //                Toast.makeText(MainActivity.this, "Welcome!", Toast.LENGTH_SHORT).show();
-                String location = mLocationEditText.getText().toString();
+                //String location = mLocationEditText.getText().toString();
 //                Log.d(TAG,location);
-                Intent intent = new Intent(MainActivity.this,RestaurantsActivity.class);
-                intent.putExtra("location",location);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this,RestaurantsActivity.class);
+//                intent.putExtra("location",location);
+//                startActivity(intent);
 //                 location = mLocationEditText.getText().toString();
                 //Toast.makeText(MainActivity.this, location, Toast.LENGTH_LONG).show();
             }
-        });
+       // });
     }
-}
+
+
