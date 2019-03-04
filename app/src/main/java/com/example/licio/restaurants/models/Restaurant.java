@@ -68,7 +68,7 @@ public class Restaurant {
         return mLatitude;
     }
 
-    public double getmLongitude() {
+    public double getLongitude() {
         return mLongitude;
     }
 
