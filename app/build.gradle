@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.android.support:support-v4:27.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testImplementation 'junit:junit:4.12'
-    //testImplementation "org.robolectric:robolectric:4.2"
+    testImplementation "org.robolectric:robolectric:4.2"
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
