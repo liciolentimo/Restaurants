@@ -1,7 +1,9 @@
 package com.example.licio.restaurants.models;
 
 import java.util.ArrayList;
+import org.parceler.Parcel;
 
+@Parcel
 public class Restaurant {
     private String mName;
     private String mPhone;
@@ -12,6 +14,8 @@ public class Restaurant {
     private double mLatitude;
     private double mLongitude;
     private ArrayList<String> mCategories = new ArrayList<>();
+
+    public Restaurant() {}
 
     public Restaurant(String name, String phone, String website,
                       double rating, String imageUrl, ArrayList<String> address,
@@ -27,7 +31,14 @@ public class Restaurant {
         this.mLongitude = longitude;
         this.mCategories = categories;
 
+//        mImageUrl = getLargeImageUrl(imageUrl);
+
     }
+
+//    public String getLargeImageUrl(String imageUrl) {
+//        String largeImageUrl = imageUrl.substring(0, imageUrl.length() - 6).concat("o.jpg");
+//        return largeImageUrl;
+//    }
 
     public String getName() {
         return mName;

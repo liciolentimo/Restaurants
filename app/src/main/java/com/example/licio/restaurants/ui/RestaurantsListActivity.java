@@ -5,10 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.licio.restaurants.R;
 import com.example.licio.restaurants.adapters.RestaurantListAdapter;
@@ -25,11 +21,11 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class RestaurantsActivity extends AppCompatActivity {
+public class RestaurantsListActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
     private RestaurantListAdapter mAdapter;
     //@BindView(R.id.locationTextView) TextView mLocationTextView;
-    public static final String TAG = RestaurantsActivity.class.getSimpleName();
+    public static final String TAG = RestaurantsListActivity.class.getSimpleName();
     //@BindView(R.id.listView) ListView mListView;
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
 
@@ -61,7 +57,7 @@ public class RestaurantsActivity extends AppCompatActivity {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                String restaurant = ((TextView)view).getText().toString();
-//                Toast.makeText(RestaurantsActivity.this, restaurant, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RestaurantsListActivity.this, restaurant, Toast.LENGTH_SHORT).show();
 //            }
 //        });
 
@@ -88,18 +84,18 @@ public class RestaurantsActivity extends AppCompatActivity {
 //                String jsonData = response.body().string();
 //                Log.v(TAG, jsonData);
                 restaurants = yelpService.processResults(response);
-                RestaurantsActivity.this.runOnUiThread(new Runnable() {
+                RestaurantsListActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter = new RestaurantListAdapter(getApplicationContext(), restaurants);
                         mRecyclerView.setAdapter(mAdapter);
                         RecyclerView.LayoutManager layoutManager =
-                                new LinearLayoutManager(RestaurantsActivity.this);
+                                new LinearLayoutManager(RestaurantsListActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
                         }
 
-//                        ArrayAdapter adapter = new ArrayAdapter(RestaurantsActivity.this,
+//                        ArrayAdapter adapter = new ArrayAdapter(RestaurantsListActivity.this,
 //                                android.R.layout.simple_list_item_1, restaurantNames);
 //                        mListView.setAdapter(adapter);
 //                        for (Restaurant restaurant : restaurants) {
