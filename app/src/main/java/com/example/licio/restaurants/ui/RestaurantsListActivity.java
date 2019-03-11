@@ -1,11 +1,20 @@
 package com.example.licio.restaurants.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import com.example.licio.restaurants.Constants;
 import com.example.licio.restaurants.R;
 import com.example.licio.restaurants.adapters.RestaurantListAdapter;
 import com.example.licio.restaurants.models.Restaurant;
@@ -29,6 +38,10 @@ public class RestaurantsListActivity extends AppCompatActivity {
     //@BindView(R.id.listView) ListView mListView;
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
 
+
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+    private String mRecentAddress;
 //    private String[] restaurants = new String[] {"Mi Mero Mole", "Mother's Bistro",
 //            "Life of Pie", "Screen Door", "Luc Lac", "Sweet Basil",
 //            "Slappy Cakes", "Equinox", "Miss Delta's", "Andina",
@@ -44,6 +57,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+
+
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+        //Log.d("Shared Pref Location", mRecentAddress);
+
+//        if (mRecentAddress != null) {
+//            getRestaurants(mRecentAddress);
+//        }
 
 //        mLocationTextView = (TextView)findViewById(R.id.locationTextView);
 //        mListView = (ListView) findViewById(R.id.listView);
@@ -67,6 +89,42 @@ public class RestaurantsListActivity extends AppCompatActivity {
        //mLocationTextView.setText("Here are all the restaurants near " + location);
 
         getRestaurants(location);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        ButterKnife.bind(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                addToSharedPreferences(query);
+                getRestaurants(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     private void getRestaurants(String location) {
@@ -113,5 +171,8 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+    private void addToSharedPreferences(String location) {
+        mEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
     }
 }
